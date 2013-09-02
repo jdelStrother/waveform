@@ -189,11 +189,7 @@ class Waveform
     # frames -- the peak is individual to the channel, and the returned collection
     # of peaks are not (necessarily) from the same frame(s).
     def peak(frames, channels=1)
-      peak_frame = []
-      (0..channels-1).each do |channel|
-        peak_frame << channel_peak(frames, channel)
-      end
-      peak_frame
+      (0...channels).map{|c| frames.peak(c)}
     end
 
     # Returns an array of rms values for the given frameset where each rms value is
