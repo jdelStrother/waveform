@@ -160,17 +160,20 @@ class Waveform
         color = ChunkyPNG::Color.from_hex(options[:color])
       end
 
+      max_y = options[:height]
       # Calling "zero" the middle of the waveform, like there's positive and
       # negative amplitude
-      zero = options[:height] / 2.0
+      zero = max_y / 2.0
 
       samples.each_with_index do |sample, x|
         # Half the amplitude goes above zero, half below
-        amplitude = sample * options[:height].to_f / 2.0
+        amplitude = sample * max_y / 2.0
         # If you give ChunkyPNG floats for pixel positions all sorts of things
         # go haywire.
         bottom = (zero - amplitude).round
         top = (zero + amplitude).round
+        bottom = 0 if bottom < 0
+        top = max_y - 1 if top >= max_y
         (bottom..top).step{|y| image.set_pixel(x, y, color) }
       end
 
@@ -186,6 +189,7 @@ class Waveform
 
       image
     end
+
 
     # Returns an array of the peak of each channel for the given collection of
     # frames -- the peak is individual to the channel, and the returned collection
