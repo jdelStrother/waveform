@@ -169,7 +169,9 @@ class Waveform
         amplitude = sample * options[:height].to_f / 2.0
         # If you give ChunkyPNG floats for pixel positions all sorts of things
         # go haywire.
-        image.line(x, (zero - amplitude).round, x, (zero + amplitude).round, color)
+        bottom = (zero - amplitude).round
+        top = (zero + amplitude).round
+        (bottom..top).step{|y| image.set_pixel(x, y, color) }
       end
 
       # Simple transparency masking, it just loops over every pixel and makes
