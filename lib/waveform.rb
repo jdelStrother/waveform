@@ -132,7 +132,7 @@ class Waveform
         @log.timed("Sampling #{frames_per_sample} frames per sample: ") do
           while(frames_read = audio.read(sample)) > 0
             frames << send(method, sample, audio.info.channels)
-            @log.out(".")
+            @log.out(".".freeze)
           end
         end
       end
