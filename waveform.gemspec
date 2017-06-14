@@ -1,4 +1,7 @@
-require "./lib/waveform/version"
+lib = File.expand_path('../lib/', __FILE__)  
+$:.unshift lib unless $:.include?(lib)
+
+require "waveform/version"
 
 Gem::Specification.new do |s|
   s.name              = "waveform"
